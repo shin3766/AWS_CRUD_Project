@@ -2,6 +2,7 @@ package com.example.aws_crud_practice.board.controller;
 
 import com.example.aws_crud_practice.board.dto.request.CreateBoardRequestDto;
 import com.example.aws_crud_practice.board.dto.response.CreateBoardResponseDto;
+import com.example.aws_crud_practice.board.dto.response.GetBoardResponseDto;
 import com.example.aws_crud_practice.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Transactional
 @RequiredArgsConstructor
-@RequestMapping("/v1")
+@RequestMapping("/v1/boards")
 public class BoardController {
 
     private final BoardService boardService;
 
 
-    @PostMapping("/boards")
+    @PostMapping
     public ResponseEntity<?> createBoard(@RequestBody CreateBoardRequestDto req) {
 
         CreateBoardResponseDto res = boardService.createBoard(req);
@@ -26,8 +27,17 @@ public class BoardController {
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
 
-    @GetMapping()
-    public ResponseEntity<?> getBoard() {
+    @GetMapping("/{boardId}")
+    public ResponseEntity<?> getBoard(@PathVariable Long boardId) {
+
+        GetBoardResponseDto res = boardService.getBoard(boardId);
+
+        return ResponseEntity.ok().body(res);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<?> getBoards(@PathVariable Long boardId) {
+
         return ResponseEntity.ok().body(null);
     }
 

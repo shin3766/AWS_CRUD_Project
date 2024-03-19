@@ -2,11 +2,14 @@ package com.example.aws_crud_practice.board.service;
 
 import com.example.aws_crud_practice.board.dto.request.CreateBoardRequestDto;
 import com.example.aws_crud_practice.board.dto.response.CreateBoardResponseDto;
+import com.example.aws_crud_practice.board.dto.response.GetBoardResponseDto;
 import com.example.aws_crud_practice.board.entity.Board;
 import com.example.aws_crud_practice.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -33,5 +36,21 @@ public class BoardService {
                 .writer(writer)
                 .contents(contents)
                 .build();
+    }
+
+    public GetBoardResponseDto getBoard(Long boardId) {
+        Board board = findBoardById(boardId);
+
+        return GetBoardResponseDto.builder()
+                .title(board.getTitle())
+                .writer(board.getWriter())
+                .contents(board.getContents())
+                .build();
+    }
+
+    private Board findBoardById(Long boardId) {
+
+        return boardRepository.findById(boardId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ID입니다."));
     }
 }
