@@ -1,5 +1,6 @@
 package com.example.aws_crud_practice.board.entity;
 
+import com.example.aws_crud_practice.board.dto.request.UpdateBoardRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,5 +30,11 @@ public class Board {
         this.title = title;
         this.writer = writer;
         this.contents = contents;
+    }
+
+    public void update(UpdateBoardRequestDto req) {
+        if (!req.getTitle().isEmpty()) this.title = req.getTitle();
+        if (!req.getWriter().isEmpty()) this.writer = req.getWriter();
+        if (!req.getContents().isEmpty()) this.contents = req.getContents();
     }
 }

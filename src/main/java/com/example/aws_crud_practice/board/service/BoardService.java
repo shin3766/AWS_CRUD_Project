@@ -1,8 +1,10 @@
 package com.example.aws_crud_practice.board.service;
 
 import com.example.aws_crud_practice.board.dto.request.CreateBoardRequestDto;
+import com.example.aws_crud_practice.board.dto.request.UpdateBoardRequestDto;
 import com.example.aws_crud_practice.board.dto.response.CreateBoardResponseDto;
 import com.example.aws_crud_practice.board.dto.response.GetBoardResponseDto;
+import com.example.aws_crud_practice.board.dto.response.UpdateBoardResponseDto;
 import com.example.aws_crud_practice.board.entity.Board;
 import com.example.aws_crud_practice.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -52,5 +54,16 @@ public class BoardService {
 
         return boardRepository.findById(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ID입니다."));
+    }
+
+    public UpdateBoardResponseDto updateBoard(Long boardId, UpdateBoardRequestDto req) {
+        Board board = findBoardById(boardId);
+        board.update(req);
+        boardRepository.save(board);
+        return UpdateBoardResponseDto.builder()
+                .title(req.getTitle())
+                .writer(req.getWriter())
+                .contents(req.getContents())
+                .build();
     }
 }

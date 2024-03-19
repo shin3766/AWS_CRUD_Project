@@ -1,8 +1,10 @@
 package com.example.aws_crud_practice.board.controller;
 
 import com.example.aws_crud_practice.board.dto.request.CreateBoardRequestDto;
+import com.example.aws_crud_practice.board.dto.request.UpdateBoardRequestDto;
 import com.example.aws_crud_practice.board.dto.response.CreateBoardResponseDto;
 import com.example.aws_crud_practice.board.dto.response.GetBoardResponseDto;
+import com.example.aws_crud_practice.board.dto.response.UpdateBoardResponseDto;
 import com.example.aws_crud_practice.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,9 +43,13 @@ public class BoardController {
         return ResponseEntity.ok().body(null);
     }
 
-    @PatchMapping
-    public ResponseEntity<?> updateBoard() {
-        return ResponseEntity.ok().body(null);
+    @PatchMapping("/{boardId}")
+    public ResponseEntity<?> updateBoard(@PathVariable Long boardId,
+                                         @RequestBody UpdateBoardRequestDto req) {
+
+        UpdateBoardResponseDto res = boardService.updateBoard(boardId, req);
+
+        return ResponseEntity.ok().body(res);
     }
 
     @DeleteMapping
