@@ -6,11 +6,13 @@ import lombok.Getter;
 @Getter
 @Builder
 public class GetBoardResponseDto {
+    Long id;
     String title;
     String writer;
     String contents;
 
-    public GetBoardResponseDto(String title, String writer, String contents) {
+    public GetBoardResponseDto(Long id, String title, String writer, String contents) {
+        this.id = id;
         this.title = title;
         this.writer = writer;
         this.contents = contents;
