@@ -3,6 +3,7 @@ package com.example.aws_crud_practice.board.service;
 import com.example.aws_crud_practice.board.dto.request.CreateBoardRequestDto;
 import com.example.aws_crud_practice.board.dto.request.UpdateBoardRequestDto;
 import com.example.aws_crud_practice.board.dto.response.CreateBoardResponseDto;
+import com.example.aws_crud_practice.board.dto.response.GetAllBoardResponseDto;
 import com.example.aws_crud_practice.board.dto.response.GetBoardResponseDto;
 import com.example.aws_crud_practice.board.dto.response.UpdateBoardResponseDto;
 import com.example.aws_crud_practice.board.entity.Board;
@@ -11,7 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -65,5 +67,12 @@ public class BoardService {
                 .writer(req.getWriter())
                 .contents(req.getContents())
                 .build();
+    }
+
+    public List<GetAllBoardResponseDto> getBoards() {
+        List<Board> boards = boardRepository.findAll();
+        return boards.stream()
+                .map(board -> new GetAllBoardResponseDto(board.getTitle(), board.getWriter()))
+                .collect(Collectors.toList());
     }
 }

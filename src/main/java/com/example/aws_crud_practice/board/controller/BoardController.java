@@ -3,6 +3,7 @@ package com.example.aws_crud_practice.board.controller;
 import com.example.aws_crud_practice.board.dto.request.CreateBoardRequestDto;
 import com.example.aws_crud_practice.board.dto.request.UpdateBoardRequestDto;
 import com.example.aws_crud_practice.board.dto.response.CreateBoardResponseDto;
+import com.example.aws_crud_practice.board.dto.response.GetAllBoardResponseDto;
 import com.example.aws_crud_practice.board.dto.response.GetBoardResponseDto;
 import com.example.aws_crud_practice.board.dto.response.UpdateBoardResponseDto;
 import com.example.aws_crud_practice.board.service.BoardService;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Transactional
@@ -37,10 +40,12 @@ public class BoardController {
         return ResponseEntity.ok().body(res);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<?> getBoards(@PathVariable Long boardId) {
+    @GetMapping
+    public ResponseEntity<?> getBoards() {
 
-        return ResponseEntity.ok().body(null);
+        List<GetAllBoardResponseDto> allBoards = boardService.getBoards();
+
+        return ResponseEntity.ok().body(allBoards);
     }
 
     @PatchMapping("/{boardId}")
@@ -52,7 +57,7 @@ public class BoardController {
         return ResponseEntity.ok().body(res);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{boardId}")
     public ResponseEntity<?> deleteBoard() {
         return ResponseEntity.ok().body(null);
     }
