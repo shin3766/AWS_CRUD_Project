@@ -46,6 +46,7 @@ public class BoardService {
         Board board = findBoardById(boardId);
 
         return GetBoardResponseDto.builder()
+                .id(board.getId())
                 .title(board.getTitle())
                 .writer(board.getWriter())
                 .contents(board.getContents())

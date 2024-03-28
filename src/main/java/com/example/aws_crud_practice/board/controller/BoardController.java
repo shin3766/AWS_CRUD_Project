@@ -43,9 +43,9 @@ public class BoardController {
     @GetMapping
     public ResponseEntity<?> getBoards() {
 
-        List<GetAllBoardResponseDto> allBoards = boardService.getBoards();
+        List<GetAllBoardResponseDto> boards = boardService.getBoards();
 
-        return ResponseEntity.ok().body(allBoards);
+        return ResponseEntity.ok().body(boards);
     }
 
     @PatchMapping("/{boardId}")
