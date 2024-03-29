@@ -1,6 +1,7 @@
 package com.example.aws_crud_practice.board.service;
 
 import com.example.aws_crud_practice.board.dto.request.CreateBoardRequestDto;
+import com.example.aws_crud_practice.board.dto.request.DeleteBoardRequestDto;
 import com.example.aws_crud_practice.board.dto.request.UpdateBoardRequestDto;
 import com.example.aws_crud_practice.board.dto.response.CreateBoardResponseDto;
 import com.example.aws_crud_practice.board.dto.response.GetAllBoardResponseDto;
@@ -26,10 +27,12 @@ public class BoardService {
         String title = req.getTitle();
         String writer = req.getWriter();
         String contents = req.getContents();
+        String password = req.getPassword();
 
         Board board = Board.builder()
                 .title(title)
                 .writer(writer)
+                .password(password)
                 .contents(contents)
                 .build();
 
@@ -61,8 +64,14 @@ public class BoardService {
 
     public UpdateBoardResponseDto updateBoard(Long boardId, UpdateBoardRequestDto req) {
         Board board = findBoardById(boardId);
-        board.update(req);
+
+        if(!board.getPassword().equals(req.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        board.update(req.getTitle(), req.getWriter(), req.getContents());
         boardRepository.save(board);
+
         return UpdateBoardResponseDto.builder()
                 .title(req.getTitle())
                 .writer(req.getWriter())
@@ -71,9 +80,19 @@ public class BoardService {
     }
 
     public List<GetAllBoardResponseDto> getBoards() {
-        List<Board> boards = boardRepository.findAll();
+        List<Board> boards = boardRepository.findAllByOrderByCreatedAtDesc();
         return boards.stream()
                 .map(board -> new GetAllBoardResponseDto(board.getTitle(), board.getWriter()))
                 .collect(Collectors.toList());
+    }
+
+    public void deleteBoard(Long boardId, DeleteBoardRequestDto req) {
+        Board board = findBoardById(boardId);
+
+        if(!board.getPassword().equals(req.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        boardRepository.delete(board);
     }
 }

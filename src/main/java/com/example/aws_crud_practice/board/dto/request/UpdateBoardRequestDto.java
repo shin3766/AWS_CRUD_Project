@@ -9,10 +9,12 @@ public class UpdateBoardRequestDto {
     String title;
     String writer;
     String contents;
+    String password;
 
-    public UpdateBoardRequestDto(String title, String writer, String contents) {
+    public UpdateBoardRequestDto(String title, String writer, String contents, String password) {
         this.title = title;
         this.writer = writer;
         this.contents = contents;
+        this.password = password;
     }
 }

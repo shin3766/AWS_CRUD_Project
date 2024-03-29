@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -24,17 +26,30 @@ public class Board {
     @Column
     private String contents;
 
+    @Column
+    private String password;
+
+    LocalDateTime createdAt;
+
     @Builder
-    private Board(Long Id, String title, String writer, String contents) {
+    private Board(Long Id, String title, String password , String writer, String contents) {
         this.Id = Id;
         this.title = title;
+        this.password = password;
         this.writer = writer;
         this.contents = contents;
+        this.createdAt = LocalDateTime.now();
     }
 
-    public void update(UpdateBoardRequestDto req) {
-        if (!req.getTitle().isEmpty()) this.title = req.getTitle();
-        if (!req.getWriter().isEmpty()) this.writer = req.getWriter();
-        if (!req.getContents().isEmpty()) this.contents = req.getContents();
+    public void update(String title, String writer, String contents) {
+        if (!title.isEmpty()) {
+            this.title = title;
+        }
+        if (!writer.isEmpty()) {
+            this.writer = writer;
+        }
+        if (!contents.isEmpty()) {
+            this.contents = contents;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.aws_crud_practice.board.controller;
 
 import com.example.aws_crud_practice.board.dto.request.CreateBoardRequestDto;
+import com.example.aws_crud_practice.board.dto.request.DeleteBoardRequestDto;
 import com.example.aws_crud_practice.board.dto.request.UpdateBoardRequestDto;
 import com.example.aws_crud_practice.board.dto.response.CreateBoardResponseDto;
 import com.example.aws_crud_practice.board.dto.response.GetAllBoardResponseDto;
@@ -58,7 +59,10 @@ public class BoardController {
     }
 
     @DeleteMapping("/{boardId}")
-    public ResponseEntity<?> deleteBoard() {
-        return ResponseEntity.ok().body(null);
+    public ResponseEntity<?> deleteBoard(@PathVariable Long boardId, @RequestBody DeleteBoardRequestDto req) {
+
+        boardService.deleteBoard(boardId, req);
+
+        return ResponseEntity.ok().body("게시글이 삭제됐습니다.");
     }
 }
