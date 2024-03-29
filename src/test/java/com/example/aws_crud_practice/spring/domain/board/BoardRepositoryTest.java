@@ -21,16 +21,14 @@ class BoardRepositoryTest {
         Board board = createBoard("첫번째", "첫유저", "1234","일등이당");
 
         //when
-        Board saveBoard = boardRepository.save(board);
+        Board savedBoard = boardRepository.save(board);
 
         //then
-        //board와 saveBoard 동일 확인
-        Assertions.assertThat(board).isSameAs(saveBoard);
-        //saveBoard id 생성 확인
-        Assertions.assertThat(board.getId()).isNotNull();
-        //board와 saveBoard 제목 동일 확인
-        Assertions.assertThat(board.getTitle()).isEqualTo(saveBoard.getTitle());
-        //한 개만 저장됐는지 확인
+        // board와 savedBoard 동일한지 확인
+        Assertions.assertThat(savedBoard).isEqualTo(board);
+        // 저장된 board의 id가 생성되었는지 확인
+        Assertions.assertThat(savedBoard.getId()).isNotNull();
+        // 한 개만 저장되었는지 확인
         Assertions.assertThat(boardRepository.count()).isEqualTo(1);
     }
 
@@ -41,15 +39,14 @@ class BoardRepositoryTest {
         Board saveBoard2 = boardRepository.save(createBoard("제목2", "글쓴이2", "1234", "내용2"));
 
         //when
-        Board getBoard2 = boardRepository.findById(2L)
+        Board getBoard2 = boardRepository.findById(saveBoard2.getId())
                 .orElseThrow(() -> new IllegalArgumentException("지정된 board를 찾을 수 없습니다."));
 
         //then
-        Assertions.assertThat(getBoard2).isSameAs(saveBoard2);
+        Assertions.assertThat(getBoard2).isEqualTo(saveBoard2);
         Assertions.assertThat(getBoard2.getTitle()).isEqualTo("제목2");
         Assertions.assertThat(getBoard2.getWriter()).isEqualTo("글쓴이2");
         Assertions.assertThat(getBoard2.getContents()).isEqualTo("내용2");
-
     }
 
     Board createBoard(String title, String writer, String password, String contents) {
