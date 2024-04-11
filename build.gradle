@@ -38,7 +38,7 @@ dependencies {
     // Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    // MySQL
+    // DB
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     // Lombok

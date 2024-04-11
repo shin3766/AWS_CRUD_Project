@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: AWS_CRUD_Practice
+  datasource:
+    url: jdbc:mysql://localhost:3306/AWS_CRUD_Practice
+    username: root
+    password: ss0920
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
