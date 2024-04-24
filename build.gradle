@@ -38,7 +38,7 @@ dependencies {
     // Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    // MySQL
+    // DB
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     // Lombok
@@ -52,6 +52,12 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'com.h2database:h2'
+
+
+    // swagger
+    // https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
 }
 
 tasks.named('test') {
