@@ -1,6 +1,5 @@
 package com.example.aws_crud_practice.board.entity;
 
-import com.example.aws_crud_practice.board.dto.request.UpdateBoardRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Getter
-public class Board {
+public class Board extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +28,7 @@ public class Board {
     @Column
     private String password;
 
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @Builder
     private Board(Long Id, String title, String password , String writer, String contents) {
