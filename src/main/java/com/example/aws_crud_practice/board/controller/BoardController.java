@@ -8,6 +8,7 @@ import com.example.aws_crud_practice.board.dto.response.GetAllBoardResponseDto;
 import com.example.aws_crud_practice.board.dto.response.GetBoardResponseDto;
 import com.example.aws_crud_practice.board.dto.response.UpdateBoardResponseDto;
 import com.example.aws_crud_practice.board.service.BoardService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 @RequestMapping("/v1/boards")
+@Tag(name = "게시판 API", description = "게시판 CRUD api입니다.")
 public class BoardController {
 
     private final BoardService boardService;
